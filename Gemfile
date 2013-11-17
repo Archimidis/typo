@@ -46,6 +46,10 @@ gem 'acts_as_tree_rails3'
 gem 'recaptcha', :require => 'recaptcha/rails', :branch => 'rails3'
 
 group :development, :test do
+  gem 'railroady'
+end
+
+group :development, :test do
   gem 'ruby-debug19'
   gem 'factory_girl', '~> 2.2'
   gem 'webrat'

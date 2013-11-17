@@ -1,0 +1,9 @@
+<div class='separator'>
+    <h4><%= _("Merge Articles") %></h4>
+    <%= form_tag(merge_articles_url, method: :post) do -%>
+        <%= label_tag 'article_id', 'Article ID' %>
+        <%= text_field_tag 'article_id', nil, placeholder: 'Enter the article id to be merged' %>
+        <br />
+        <%= submit_tag 'Merge' %>
+    <% end -%>
+</div>

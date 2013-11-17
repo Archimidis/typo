@@ -490,6 +490,7 @@ describe Admin::ContentController do
         assigns(:article).should be_valid
         response.should contain(/body/)
         response.should contain(/extended content/)
+        response.should contain(/Merge Articles/)
       end
 
       it 'should update article by edit action' do
@@ -622,6 +623,13 @@ describe Admin::ContentController do
     it_should_behave_like 'new action'
     it_should_behave_like 'destroy action'
 
+    describe 'merge articles action' do
+      it 'should not be able to be executed' do
+        Article.any_instance.should_not_receive(:merge)
+        post :merge_articles, { 'id' => "#{@article.id}", 'article_id' => '100' }
+      end
+    end
+
     describe 'edit action' do
 
       it "should redirect if edit article doesn't his" do
@@ -634,6 +642,7 @@ describe Admin::ContentController do
         response.should render_template('new')
         assigns(:article).should_not be_nil
         assigns(:article).should be_valid
+        response.should_not contain(/Merge Articles/)
       end
 
       it 'should update article by edit action' do

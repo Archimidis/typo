@@ -417,8 +417,14 @@ class Article < Content
   end
 
   def self.merge(article_1, article_2)
-    articles_to_merge = Article.find( [ article_1, article_2 ] )
-    merged_body = articles_to_merge.map { |a| a.body }.join('<br/>')
+    articles_to_merge = Article.where(id: [ article_1.to_i, article_2.to_i ] )
+    #articles_to_merge = Article.where(id: [ article_1.to_i, article_2.to_i ] )
+    raise "#{articles_to_merge.to_yaml}" if articles_to_merge.size < 2
+    logger.info { "=============================================================================" }
+    logger.info { "#{articles_to_merge[0].body}" }
+    logger.info { "#{articles_to_merge[1].body}" }
+    logger.info { "=============================================================================" }
+    merged_body = articles_to_merge.map { |a| a.body }.join
     comments = articles_to_merge.map { |a| a.comments }.flatten
 
     merged_article = Article.new(title: articles_to_merge.first.title,
@@ -431,7 +437,9 @@ class Article < Content
 
     if merged_article.save
       # delete old articles
-      Article.destroy_all(id: [ article_1, article_2 ])
+      #Article.destroy_all(id: [ article_1, article_2 ])
+      articles_to_merge.each(&:delete)
+      logger.info { "=============================================================================" }
     end
 
     return merged_article

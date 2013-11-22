@@ -40,7 +40,7 @@ class Admin::ContentController < Admin::BaseController
   def merge_articles
     return redirect_to action: 'index' unless current_user.admin?
 
-    merged_article = Article.merge(params[:id], params[:article_id])
+    merged_article = Article.merge(params[:id], params[:merge_with])
 
     if merged_article.persisted?
       flash[:notice] = 'Articles were merged'

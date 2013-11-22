@@ -74,7 +74,7 @@ Then /^I should( not)? see the merge article function$/ do |negate|
 
   begin
     merge_btn = find_button('Merge')
-    article_id = find_field('article_id')
+    article_id = find_field('merge_with')
   rescue Capybara::ElementNotFound
   end
 
